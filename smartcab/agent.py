@@ -82,6 +82,12 @@ class LearningAgent(Agent):
         maxQ = None
         if state in self.Q:
             maxQ, maxValue  = max(self.Q[state].iteritems(), key=lambda x: x[1])
+            maxlist = []
+            for i in self.Q[state]:
+                if maxValue == self.Q[state][i]:
+                    maxlist.append(i)
+            maxQ = random.choice(maxlist)
+                
         else:
             self.createQ(state)
 
@@ -178,7 +184,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent,learning=True,alpha=0.4) 
+    agent = env.create_agent(LearningAgent,learning=True,epsilon = 1,alpha=0.6) 
     
     ##############
     # Follow the driving agent
